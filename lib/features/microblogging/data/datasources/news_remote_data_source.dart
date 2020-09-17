@@ -31,7 +31,6 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
       List _news = json.decode(response.body)['news'];
 
       return _news.map((item) => NewsModel.fromJson(item)).toList();
-      // return NewsModel.fromJson(json.decode(response.body));
     } else {
       throw ServerException();
     }
