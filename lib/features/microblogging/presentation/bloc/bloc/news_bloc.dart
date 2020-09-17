@@ -27,7 +27,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   Stream<NewsState> mapEventToState(
     NewsEvent event,
   ) async* {
-    if (event is GetNews) {
+    if (event is GetNewsEvent) {
       yield Loading();
       final failureOrNews = await getNews(NoParams());
       yield* _eitherLoadedOrErrorState(failureOrNews);

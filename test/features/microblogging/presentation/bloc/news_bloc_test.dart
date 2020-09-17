@@ -61,7 +61,7 @@ void main() {
         when(mockGetNews(any)).thenAnswer((_) async => Right(tNews));
         // assert later
         final expected = [
-          Empty(),
+          // Empty(),
           Loading(),
           Loaded(news: tNews),
         ];
@@ -78,7 +78,7 @@ void main() {
         when(mockGetNews(any)).thenAnswer((_) async => Left(ServerFailure()));
         // assert later
         final expected = [
-          Empty(),
+          // Empty(),
           Loading(),
           Error(message: SERVER_FAILURE_MESSAGE),
         ];
