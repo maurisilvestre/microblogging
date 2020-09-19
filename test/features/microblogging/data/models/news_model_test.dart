@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:grupo_boticario/features/microblogging/data/models/message_model.dart';
 import 'package:grupo_boticario/features/microblogging/data/models/news_model.dart';
-import 'package:grupo_boticario/features/microblogging/data/models/user_model.dart';
+import 'package:grupo_boticario/features/auth/data/models/user_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 

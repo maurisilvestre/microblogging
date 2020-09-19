@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../domain/entities/news.dart';
 import 'message_model.dart';
-import 'user_model.dart';
+import '../../../auth/data/models/user_model.dart';
 
 class NewsModel extends News {
   NewsModel({

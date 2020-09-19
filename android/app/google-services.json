@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "666948307210",
+    "firebase_url": "https://microblogging-a09f7.firebaseio.com",
+    "project_id": "microblogging-a09f7",
+    "storage_bucket": "microblogging-a09f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666948307210:android:aee07648bdaaca0d7c52f3",
+        "android_client_info": {
+          "package_name": "com.example.grupo_boticario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666948307210-o97jml03fcnato8k4rjfhrfdpm4livpb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.grupo_boticario",
+            "certificate_hash": "b281e225db53f70bdfb022cf374c0d6012319006"
+          }
+        },
+        {
+          "client_id": "666948307210-9nt5di0rba8qbo35v21rdvgk872uktrg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6k60YVofMuLvQFicUKqmbrUQOqNOA5QQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666948307210-9nt5di0rba8qbo35v21rdvgk872uktrg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

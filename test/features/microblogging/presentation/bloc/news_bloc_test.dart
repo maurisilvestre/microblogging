@@ -4,10 +4,10 @@ import 'package:grupo_boticario/core/error/failures.dart';
 import 'package:grupo_boticario/core/usecases/usecase.dart';
 import 'package:grupo_boticario/features/microblogging/data/models/message_model.dart';
 import 'package:grupo_boticario/features/microblogging/data/models/news_model.dart';
-import 'package:grupo_boticario/features/microblogging/data/models/user_model.dart';
+import 'package:grupo_boticario/features/auth/data/models/user_model.dart';
 import 'package:grupo_boticario/features/microblogging/domain/entities/message.dart';
 import 'package:grupo_boticario/features/microblogging/domain/entities/news.dart';
-import 'package:grupo_boticario/features/microblogging/domain/entities/user.dart';
+import 'package:grupo_boticario/features/auth/domain/entities/user.dart';
 import 'package:grupo_boticario/features/microblogging/domain/usecases/get_news.dart';
 
 import 'package:grupo_boticario/features/microblogging/presentation/bloc/bloc/news_bloc.dart';
@@ -31,9 +31,10 @@ void main() {
 
   group('getNews', () {
     final tUser = UserModel(
-      name: 'O Boticário',
-      profilePicture:
+      displayName: 'O Boticário',
+      photoURL:
           'https://pbs.twimg.com/profile_images/1240676323913347074/Gg09hEPx_400x400.jpg',
+      email: null,
     );
     final tMessage = MessageModel(
         content:

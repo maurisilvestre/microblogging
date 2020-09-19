@@ -39,7 +39,13 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   ) async* {
     yield failureOrNews.fold(
       (failure) => Error(message: _mapFailureToMessage(failure)),
-      (news) => Loaded(news: news),
+      (news) {
+        news.sort((a, b) {
+          return b.message.createdAt.compareTo(a.message.createdAt);
+        });
+
+        return Loaded(news: news);
+      },
     );
   }
 

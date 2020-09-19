@@ -6,7 +6,7 @@ import 'package:grupo_boticario/core/network/network_info.dart';
 import 'package:grupo_boticario/features/microblogging/data/datasources/news_remote_data_source.dart';
 import 'package:grupo_boticario/features/microblogging/data/models/message_model.dart';
 import 'package:grupo_boticario/features/microblogging/data/models/news_model.dart';
-import 'package:grupo_boticario/features/microblogging/data/models/user_model.dart';
+import 'package:grupo_boticario/features/auth/data/models/user_model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:grupo_boticario/features/microblogging/data/repositories/news_repository_impl.dart';
 
