@@ -38,8 +38,8 @@ final sl = GetIt.instance;
 Future<void> init() async {
   //! Features
   //Bloc
-  sl.registerFactory(() => NewsBloc(news: sl()));
-  sl.registerFactory(
+  sl.registerLazySingleton(() => NewsBloc(news: sl()));
+  sl.registerLazySingleton(
     () => AuthBloc(
       authRegisterEmailPassword: sl(),
       authEmailPassword: sl(),
@@ -48,7 +48,8 @@ Future<void> init() async {
       logOut: sl(),
     ),
   );
-  sl.registerFactory(() => UserBloc(userGetUser: sl(), userSetUser: sl()));
+  sl.registerLazySingleton(
+      () => UserBloc(userGetUser: sl(), userSetUser: sl()));
   sl.registerLazySingleton(() => ComentarioBloc(
       comentariosGet: sl(), comentarioSet: sl(), comentarioDel: sl()));
 
@@ -73,7 +74,7 @@ Future<void> init() async {
     ),
   );
 
-  sl.registerFactory<AuthRepository>(
+  sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       authDataSource: sl(),
       networkInfo: sl(),

@@ -25,6 +25,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteAuth = await emailOrGoogle();
+        if (remoteAuth == null) Left(ServerFailure());
 
         return Right(remoteAuth);
       } on ServerException {

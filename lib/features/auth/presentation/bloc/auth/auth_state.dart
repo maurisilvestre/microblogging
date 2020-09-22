@@ -13,6 +13,8 @@ class Empty extends AuthState {}
 
 class Loading extends AuthState {}
 
+class RegisterLoaded extends AuthState {}
+
 class Loaded extends AuthState {
   final UserModel user;
 

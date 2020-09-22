@@ -31,6 +31,8 @@ abstract class AuthDataSource {
     String email,
     String password,
   });
+
+  Future<UserModel> getUsuario({String id});
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
@@ -53,26 +55,17 @@ class AuthDataSourceImpl implements AuthDataSource {
     try {
       final result = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+      return await getUsuario(id: result.user.uid);
 
-      // Map<String, dynamic> _usuarioAutenticado = {
-      //   'name': result.user.displayName,
-      //   'profile_picture': result.user.photoUrl,
-      //   'email': result.user.email,
-      // };
-
-      UserModel _userModel = UserModel(
-          reference: Firestore.instance
-              .collection('usuario')
-              .document(result.user.uid),
-          displayName: null,
-          photoURL: null,
-          email: null);
-      userDataSource = UserDataSourceImpl();
-      return userDataSource.getUser(userModel: _userModel);
-
-      // UserModel(reference: Firestore.instance.collection('usuario').document(), displayName: null, photoURL: null, email: null)
-
-      // return UserModel.fromJson(_usuarioAutenticado);
+      // UserModel _userModel = UserModel(
+      //     reference: Firestore.instance
+      //         .collection('usuario')
+      //         .document(result.user.uid),
+      //     displayName: null,
+      //     photoURL: null,
+      //     email: null);
+      // userDataSource = UserDataSourceImpl();
+      // return userDataSource.getUser(userModel: _userModel);
     } catch (e) {
       throw ServerException();
     }
@@ -118,7 +111,7 @@ class AuthDataSourceImpl implements AuthDataSource {
         'email': user.email,
       };
 
-      return UserModel.fromJson(_usuarioAutenticado);
+      return await getUsuario(id: user.uid);
     } catch (e) {
       throw ServerException();
     }
@@ -153,7 +146,20 @@ class AuthDataSourceImpl implements AuthDataSource {
         userDataSource.setUser(userModel: userModel);
       }
 
-      // UserModel(reference: Firestore.instance.collection('usuario').document(), displayName: null, photoURL: null, email: null)
+      return userModel;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<UserModel> getUsuario({String id}) async {
+    try {
+      DocumentSnapshot ref =
+          await Firestore.instance.collection('usuario').document(id).get();
+
+      UserModel userModel = UserModel.fromJson(ref.data);
+      userModel.reference = ref.reference;
 
       return userModel;
     } catch (e) {

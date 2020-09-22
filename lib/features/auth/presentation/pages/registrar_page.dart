@@ -100,7 +100,7 @@ class _RegistrarPageState extends State<RegistrarPage>
                         controller: _controllerSenha,
                         key: Key('senha'),
                         validator: (String arg) {
-                          if (arg.length < 3)
+                          if (arg.length < 6)
                             return 'A senha deve ter pelo menos 3 caracteres';
                           else
                             return null;
@@ -120,10 +120,10 @@ class _RegistrarPageState extends State<RegistrarPage>
                         controller: _controllerSenhaRepetir,
                         key: Key('senhaRepetir'),
                         validator: (String arg) {
-                          if (arg.length < 3)
+                          if (arg.length < 6)
                             return 'A senha deve ter pelo menos 3 caracteres';
-                          else if (_controllerSenhaRepetir.value !=
-                              _controllerSenha.value)
+                          else if (_controllerSenhaRepetir.text !=
+                              _controllerSenha.text)
                             return 'As senhas devem ser iguais';
                           else
                             return null;

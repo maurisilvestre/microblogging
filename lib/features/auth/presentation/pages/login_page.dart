@@ -31,8 +31,9 @@ class LoginPage extends StatelessWidget {
                     BlocProvider.of<AuthBloc>(context)
                         .add(AuthCurrentUserEvent());
                     return Center(child: CircularProgressIndicator());
-                  }
-                  if (state is Empty) {
+                  } else if (state is RegisterLoaded) {
+                    return LoginWidget();
+                  } else if (state is Empty) {
                     return LoginWidget();
                   } else if (state is Loading) {
                     return Center(
@@ -43,7 +44,9 @@ class LoginPage extends StatelessWidget {
                       userModel: state.user,
                     );
                   } else if (state is Error) {
-                    return LoginWidget();
+                    return LoginWidget(
+                      mensagem: state.message,
+                    );
                   }
                 },
               ),
@@ -56,8 +59,10 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginWidget extends StatelessWidget {
+  final String mensagem;
   const LoginWidget({
     Key key,
+    this.mensagem,
   }) : super(key: key);
 
   @override

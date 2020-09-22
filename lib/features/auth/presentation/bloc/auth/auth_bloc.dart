@@ -68,7 +68,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           userModel: event.userModel,
           email: event.email,
           password: event.password));
-      yield* _eitherLoadedOrErrorState(user);
+      yield* _eitherRegisterLoadedOrErrorState(user);
     } else if (event is AuthGoogleEvent) {
       yield Loading();
       final user = await getAuthGoogle(NoParams());
@@ -80,6 +80,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield* _eitherLoadedOrErrorState(user);
       yield Empty();
     }
+  }
+
+  Stream<AuthState> _eitherRegisterLoadedOrErrorState(
+    Either<Failure, UserModel> failureOrNews,
+  ) async* {
+    yield failureOrNews.fold(
+      (failure) => Error(message: _mapFailureToMessage(failure)),
+      (user) {
+        return RegisterLoaded();
+      },
+    );
   }
 
   Stream<AuthState> _eitherLoadedOrErrorState(

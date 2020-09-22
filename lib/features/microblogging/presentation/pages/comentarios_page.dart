@@ -76,6 +76,12 @@ class _ComentariosListaState extends State<ComentariosLista> {
   }
 
   @override
+  void dispose() {
+    _controllerComentario.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -100,19 +106,24 @@ class _ComentariosListaState extends State<ComentariosLista> {
                 child: Stack(
                   children: <Widget>[
                     ListTile(
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image(
-                          fit: BoxFit.cover,
-                          image: AdvancedNetworkImage(
-                            _comentario.userModel.photoURL,
-                            useDiskCache: true,
-                            cacheRule: CacheRule(
-                              maxAge: const Duration(days: 90),
+                      leading: _comentario.userModel.photoURL == null
+                          ? Icon(
+                              Icons.person,
+                              size: 48,
+                            )
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image(
+                                fit: BoxFit.cover,
+                                image: AdvancedNetworkImage(
+                                  _comentario.userModel.photoURL,
+                                  useDiskCache: true,
+                                  cacheRule: CacheRule(
+                                    maxAge: const Duration(days: 90),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
                       title: Text(
                         _comentario.comentario,
                         style: Theme.of(context).textTheme.bodyText2,
@@ -124,102 +135,107 @@ class _ComentariosListaState extends State<ComentariosLista> {
                             fontWeight: FontWeight.bold),
                       ),
                       onTap: () async {
-                        final result = await showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            _controllerComentario.text = _comentario.comentario;
-                            return SimpleDialog(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              contentPadding: EdgeInsets.all(8),
-                              children: <Widget>[
-                                Text(
-                                  'Editar comentário',
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline6,
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).cardColor,
-                                    border: Border.all(
-                                        color: Theme.of(context).accentColor),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(5),
-                                    ),
+                        if (_comentario.userModel.email ==
+                            widget.userModel.email) {
+                          final result = await showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              _controllerComentario.text =
+                                  _comentario.comentario;
+                              return SimpleDialog(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                contentPadding: EdgeInsets.all(8),
+                                children: <Widget>[
+                                  Text(
+                                    'Editar comentário',
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline6,
                                   ),
-                                  child: TextField(
-                                    controller: _controllerComentario,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                    ),
+                                  SizedBox(
+                                    height: 20,
                                   ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    RaisedButton(
-                                      color: Colors.white,
-                                      elevation: 0,
-                                      onPressed: () {
-                                        Navigator.of(context).pop(1);
-                                      },
-                                      child: Text(
-                                        'Salvar',
-                                        style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).cardColor,
+                                      border: Border.all(
+                                          color: Theme.of(context).accentColor),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    RaisedButton(
-                                      color: Colors.red[700],
-                                      elevation: 0,
-                                      onPressed: () {
-                                        Navigator.of(context).pop(2);
-                                      },
-                                      child: Text(
-                                        'Deletar',
-                                        style: TextStyle(color: Colors.white),
+                                    child: TextField(
+                                      controller: _controllerComentario,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
                                       ),
                                     ),
-                                  ],
-                                )
-                              ],
-                            );
-                          },
-                        );
-                        switch (result) {
-                          case 1:
-                            BlocProvider.of<ComentarioBloc>(context).add(
-                              SetComentarioEvents(
-                                ComentarioModel(
-                                  reference: _comentario.reference,
-                                  comentario: _controllerComentario.text,
-                                  userModel: widget.userModel,
-                                  createdAt: DateTime.now(),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      RaisedButton(
+                                        color: Colors.white,
+                                        elevation: 0,
+                                        onPressed: () {
+                                          Navigator.of(context).pop(1);
+                                        },
+                                        child: Text(
+                                          'Salvar',
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      RaisedButton(
+                                        color: Colors.red[700],
+                                        elevation: 0,
+                                        onPressed: () {
+                                          Navigator.of(context).pop(2);
+                                        },
+                                        child: Text(
+                                          'Deletar',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                          switch (result) {
+                            case 1:
+                              BlocProvider.of<ComentarioBloc>(context).add(
+                                SetComentarioEvents(
+                                  ComentarioModel(
+                                    reference: _comentario.reference,
+                                    comentario: _controllerComentario.text,
+                                    userModel: widget.userModel,
+                                    createdAt: DateTime.now(),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
 
-                            break;
-                          case 2:
-                            BlocProvider.of<ComentarioBloc>(context).add(
-                              DelComentarioEvents(
-                                _comentario,
-                              ),
-                            );
-                            break;
-                          default:
+                              break;
+                            case 2:
+                              BlocProvider.of<ComentarioBloc>(context).add(
+                                DelComentarioEvents(
+                                  _comentario,
+                                ),
+                              );
+                              break;
+                            default:
+                              _controllerComentario.clear();
+                          }
+
+                          _controllerComentario.clear();
                         }
-
-                        _controllerComentario.clear();
                       },
                     ),
                     Positioned(
