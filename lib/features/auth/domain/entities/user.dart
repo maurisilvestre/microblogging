@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+// ignore: must_be_immutable
 class User extends Equatable {
   DocumentReference reference;
   final String displayName;

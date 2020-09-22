@@ -21,12 +21,12 @@ class NewsRepositoryImpl implements NewsRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteNews = await remoteDataSource.getNews();
-        // TO-DO implementar salvar cache
-        // localDataSource.cacheNumberTrivia(remoteTrivia);
+
         return Right(remoteNews);
       } on ServerException {
         return Left(ServerFailure());
       }
-    }
+    } else
+      return Left(ServerFailure());
   }
 }

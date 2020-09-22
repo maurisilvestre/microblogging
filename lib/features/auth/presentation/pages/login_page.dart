@@ -26,6 +26,7 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: BlocBuilder<AuthBloc, AuthState>(
+                // ignore: missing_return
                 builder: (context, state) {
                   if (state is AuthInitial) {
                     BlocProvider.of<AuthBloc>(context)

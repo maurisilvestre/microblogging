@@ -4,13 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:grupo_boticario/core/error/failures.dart';
-import 'package:grupo_boticario/core/usecases/usecase.dart';
-import 'package:grupo_boticario/features/microblogging/data/models/comentario_model.dart';
-import 'package:grupo_boticario/features/microblogging/domain/entities/comentario.dart';
-import 'package:grupo_boticario/features/microblogging/domain/usecases/del_comentario.dart';
-import 'package:grupo_boticario/features/microblogging/domain/usecases/get_comentario.dart';
-import 'package:grupo_boticario/features/microblogging/domain/usecases/set_comentario.dart';
+
+import '../../../../../core/error/failures.dart';
+import '../../../../../core/usecases/usecase.dart';
+import '../../../data/models/comentario_model.dart';
+import '../../../domain/usecases/del_comentario.dart';
+import '../../../domain/usecases/get_comentario.dart';
+import '../../../domain/usecases/set_comentario.dart';
 
 part 'comentario_event.dart';
 part 'comentario_state.dart';

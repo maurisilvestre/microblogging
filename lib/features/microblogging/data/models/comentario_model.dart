@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:grupo_boticario/features/auth/data/models/user_model.dart';
-import 'package:grupo_boticario/features/microblogging/domain/entities/comentario.dart';
+
+import '../../../auth/data/models/user_model.dart';
+import '../../domain/entities/comentario.dart';
 
 // ignore: must_be_immutable
 class ComentarioModel extends Comentario {

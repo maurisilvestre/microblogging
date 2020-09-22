@@ -38,16 +38,6 @@ void main() {
     });
   }
 
-  void runTestsOffline(Function body) {
-    group('dispositivo está offline', () {
-      setUp(() {
-        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
-      });
-
-      body();
-    });
-  }
-
   group('getNews', () {
     final user = UserModel.fromJson({
       'name': 'O Boticário',
@@ -92,20 +82,6 @@ void main() {
         },
       );
 
-      // test(
-      //   'should cache the data locally when the call to remote data source is successful',
-      //   () async {
-      //     // arrange
-      //     when(mockRemoteDataSource.getRandomNumberTrivia())
-      //         .thenAnswer((_) async => tNumberTriviaModel);
-      //     // act
-      //     await repository.getRandomNumberTrivia();
-      //     // assert
-      //     verify(mockRemoteDataSource.getRandomNumberTrivia());
-      //     verify(mockLocalDataSource.cacheNumberTrivia(tNumberTrivia));
-      //   },
-      // );
-
       test(
         'deve retornar falha de servidor quando a chamada ao data source remoto não tiver sucesso',
         () async {
@@ -115,43 +91,10 @@ void main() {
           final result = await repository.getNews();
           // assert
           verify(mockRemoteDataSource.getNews());
-          // verifyZeroInteractions(mockLocalDataSource);
+
           expect(result, equals(Left(ServerFailure())));
         },
       );
     });
-
-    //   runTestsOffline(() {
-    //   test(
-
-    //     'should return last locally cached data when the cached data is present',
-    //     () async {
-    //       // arrange
-    //       when(mockLocalDataSource.getLastNumberTrivia())
-    //           .thenAnswer((_) async => tNumberTriviaModel);
-    //       // act
-    //       final result = await repository.getRandomNumberTrivia();
-    //       // assert
-    //       verifyZeroInteractions(mockRemoteDataSource);
-    //       verify(mockLocalDataSource.getLastNumberTrivia());
-    //       expect(result, equals(Right(tNumberTrivia)));
-    //     },
-    //   );
-
-    //   test(
-    //     'should return CacheFailure when there is no cached data present',
-    //     () async {
-    //       // arrange
-    //       when(mockLocalDataSource.getLastNumberTrivia())
-    //           .thenThrow(CacheException());
-    //       // act
-    //       final result = await repository.getRandomNumberTrivia();
-    //       // assert
-    //       verifyZeroInteractions(mockRemoteDataSource);
-    //       verify(mockLocalDataSource.getLastNumberTrivia());
-    //       expect(result, equals(Left(CacheFailure())));
-    //     },
-    //   );
-    // });
   });
 }

@@ -23,15 +23,11 @@ class ComentarioDataSourceImpl implements ComentarioDataSource {
           .orderBy('created_at', descending: true)
           .getDocuments();
 
-//       Stream<QuerySnapshot> ref =
-//           Firestore.instance.collection('comentarios').snapshots();
       List<ComentarioModel> _comentarioModel = [];
       ref.documents.forEach((doc) {
         _comentarioModel.add(ComentarioModel.fromJson(doc.data));
         _comentarioModel.last.reference = doc.reference;
       });
-      // ref.documents.map(
-      //     (doc) => _comentarioModel.add(ComentarioModel.fromJson(doc.data)));
       return _comentarioModel;
     } catch (e) {
       throw ServerException();

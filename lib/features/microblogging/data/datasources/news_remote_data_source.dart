@@ -22,9 +22,6 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   Future<List<NewsModel>> getNews() async {
     final response = await client.get(
       'https://gb-mobile-app-teste.s3.amazonaws.com/data.json',
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
     );
 
     if (response.statusCode == 200) {

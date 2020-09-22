@@ -116,5 +116,4 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DataConnectionChecker());
   sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => GoogleSignIn());
-  // sl.registerLazySingleton(() => FirebaseUser);
 }

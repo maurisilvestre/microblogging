@@ -25,8 +25,6 @@ class _NewsDisplayState extends State<NewsDisplay> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.only(left: 8, right: 8),
-      // height: MediaQuery.of(context).size.height,
       child: ListView.builder(
         // separatorBuilder: (context, index) => Divider(),
         itemCount: widget.news.length,
@@ -39,11 +37,6 @@ class _NewsDisplayState extends State<NewsDisplay> {
                 Icons.person,
                 color: Theme.of(context).accentColor,
               ),
-              // leading: Image.network(widget.news[idx].user.profilePicture),
-              // leading: FadeInImage.assetNetwork(
-              //   placeholder: 'http://via.placeholder.com/50x50',
-              //   image: widget.news[idx].user.profilePicture,
-              // ),
               title: Text(
                 widget.news[idx].message.content,
                 style: Theme.of(context).textTheme.bodyText2,

@@ -9,6 +9,7 @@ class EmailPasswordAuth extends StatelessWidget {
   final controllerPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
     AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -47,9 +48,6 @@ class EmailPasswordAuth extends StatelessWidget {
                       border: UnderlineInputBorder(borderSide: BorderSide.none),
                       hintText: 'E-mail',
                     ),
-                    onChanged: (value) {
-                      // inputStr = value;
-                    },
                     onSubmitted: (_) {},
                   ),
                 ),
@@ -89,9 +87,6 @@ class EmailPasswordAuth extends StatelessWidget {
                       border: UnderlineInputBorder(borderSide: BorderSide.none),
                       hintText: 'Senha',
                     ),
-                    onChanged: (value) {
-                      // inputStr = value;
-                    },
                     onSubmitted: (_) {},
                   ),
                 ),
@@ -104,13 +99,10 @@ class EmailPasswordAuth extends StatelessWidget {
           Container(
             height: 50,
             width: MediaQuery.of(context).size.width * 0.6,
-            // alignment: Alignment.centerLeft,
             child: RaisedButton(
-              // elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
-
               color: Colors.white,
               textColor: Theme.of(context).primaryColor,
               onPressed: () async {
@@ -127,14 +119,10 @@ class EmailPasswordAuth extends StatelessWidget {
           Container(
             height: 50,
             width: MediaQuery.of(context).size.width * 0.6,
-            // alignment: Alignment.centerLeft,
             child: FlatButton(
-              // elevation: 0,
               shape: RoundedRectangleBorder(
-                // side: BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.circular(8.0),
               ),
-
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () async {

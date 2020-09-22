@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grupo_boticario/features/auth/data/models/user_model.dart';
-import 'package:grupo_boticario/features/auth/presentation/bloc/user/user_bloc.dart';
 
-import '../../../../injection_container.dart';
+import '../../data/models/user_model.dart';
 import '../bloc/auth/auth_bloc.dart';
 
 class RegistrarPage extends StatefulWidget {
@@ -77,39 +73,35 @@ class _RegistrarPageState extends State<RegistrarPage>
                     leading:
                         Icon(Icons.email, color: Theme.of(context).accentColor),
                     title: TextFormField(
-                        controller: _controllerEmail,
-                        key: Key('email'),
-                        validator: (String arg) {
-                          if (arg.length == 0)
-                            return 'O email é obrigatório';
-                          else
-                            return null;
-                        },
-                        decoration: InputDecoration(
-                            border: InputBorder.none, labelText: 'Email'),
-                        onSaved: (String value) {
-                          // pet.nome = value;
-                        }),
+                      controller: _controllerEmail,
+                      key: Key('email'),
+                      validator: (String arg) {
+                        if (arg.length == 0)
+                          return 'O email é obrigatório';
+                        else
+                          return null;
+                      },
+                      decoration: InputDecoration(
+                          border: InputBorder.none, labelText: 'Email'),
+                    ),
                   ),
                   Divider(),
                   ListTile(
                     leading:
                         Icon(Icons.lock, color: Theme.of(context).accentColor),
                     title: TextFormField(
-                        obscureText: true,
-                        controller: _controllerSenha,
-                        key: Key('senha'),
-                        validator: (String arg) {
-                          if (arg.length < 6)
-                            return 'A senha deve ter pelo menos 3 caracteres';
-                          else
-                            return null;
-                        },
-                        decoration: InputDecoration(
-                            border: InputBorder.none, labelText: 'Senha'),
-                        onSaved: (String value) {
-                          // pet.nome = value;
-                        }),
+                      obscureText: true,
+                      controller: _controllerSenha,
+                      key: Key('senha'),
+                      validator: (String arg) {
+                        if (arg.length < 6)
+                          return 'A senha deve ter pelo menos 3 caracteres';
+                        else
+                          return null;
+                      },
+                      decoration: InputDecoration(
+                          border: InputBorder.none, labelText: 'Senha'),
+                    ),
                   ),
                   Divider(),
                   ListTile(

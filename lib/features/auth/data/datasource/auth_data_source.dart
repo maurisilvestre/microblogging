@@ -41,10 +41,7 @@ class AuthDataSourceImpl implements AuthDataSource {
   UserDataSourceImpl userDataSource;
   final GoogleSignIn googleSignIn;
 
-  AuthDataSourceImpl(
-      //@required this.user,
-      {@required this.auth,
-      @required this.googleSignIn});
+  AuthDataSourceImpl({@required this.auth, @required this.googleSignIn});
 
   @override
   Future<UserModel> authEmailPassword({
@@ -56,16 +53,6 @@ class AuthDataSourceImpl implements AuthDataSource {
       final result = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       return await getUsuario(id: result.user.uid);
-
-      // UserModel _userModel = UserModel(
-      //     reference: Firestore.instance
-      //         .collection('usuario')
-      //         .document(result.user.uid),
-      //     displayName: null,
-      //     photoURL: null,
-      //     email: null);
-      // userDataSource = UserDataSourceImpl();
-      // return userDataSource.getUser(userModel: _userModel);
     } catch (e) {
       throw ServerException();
     }
@@ -90,12 +77,13 @@ class AuthDataSourceImpl implements AuthDataSource {
         'email': user.email,
       };
 
-      Firestore.instance
+      await Firestore.instance
           .collection('usuario')
           .document(googleSignIn.currentUser.id)
           .setData(_usuarioAutenticado);
 
-      return UserModel.fromJson(_usuarioAutenticado);
+      // return UserModel.fromJson(_usuarioAutenticado);
+      return await getUsuario(id: googleSignIn.currentUser.id);
     } catch (e) {
       throw ServerException();
     }
@@ -105,11 +93,6 @@ class AuthDataSourceImpl implements AuthDataSource {
   Future<UserModel> authCurrentUser() async {
     try {
       user = await auth.currentUser();
-      Map<String, dynamic> _usuarioAutenticado = {
-        'name': user.displayName,
-        'profile_picture': user.photoUrl,
-        'email': user.email,
-      };
 
       return await getUsuario(id: user.uid);
     } catch (e) {

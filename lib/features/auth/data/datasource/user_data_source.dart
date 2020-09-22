@@ -21,8 +21,6 @@ class UserDataSourceImpl implements UserDataSource {
   @override
   Future<UserModel> setUser({UserModel userModel}) async {
     try {
-      // if (userModel.reference == null)
-
       await userModel.reference.setData(userModel.toJson());
       DocumentSnapshot documentSnapshot = await userModel.reference.get();
       return UserModel.fromJson(documentSnapshot.data);

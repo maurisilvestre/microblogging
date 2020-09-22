@@ -96,7 +96,6 @@ class PerfilPage extends StatelessWidget {
         ),
       ),
     );
-    return buildBodyNews(context);
   }
 
   BlocProvider<AuthBloc> buildBodyNews(BuildContext context) {
@@ -108,6 +107,7 @@ class PerfilPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: BlocBuilder<AuthBloc, AuthState>(
+                // ignore: missing_return
                 builder: (context, state) {
                   if (state is AuthInitial) {
                     BlocProvider.of<AuthBloc>(context)
@@ -204,9 +204,6 @@ class PerfilPage extends StatelessWidget {
                     return Center(
                       child: Text(state.message),
                     );
-                    // return MessageDisplay(
-                    //   message: state.message,
-                    // );
                   }
                 },
               ),

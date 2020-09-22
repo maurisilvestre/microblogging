@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../domain/entities/user.dart';
 
+// ignore: must_be_immutable
 class UserModel extends User {
   UserModel({
     @required DocumentReference reference,

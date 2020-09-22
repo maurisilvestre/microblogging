@@ -9,13 +9,10 @@ class GoogleAuth extends StatelessWidget {
     return Container(
       height: 50,
       width: MediaQuery.of(context).size.width * 0.6,
-      // alignment: Alignment.centerLeft,
       child: RaisedButton.icon(
-        // elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-
         icon: Image.asset(
           'images/glogo.png',
           height: 32,
