@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grupo_boticario/features/auth/presentation/bloc/bloc/auth_bloc.dart';
-import 'package:grupo_boticario/features/auth/presentation/widgets/google_auth.dart';
-import 'package:grupo_boticario/features/microblogging/presentation/pages/news_page.dart';
 
 import '../../../../injection_container.dart';
+import '../../../microblogging/presentation/pages/news_page.dart';
+import '../bloc/auth/auth_bloc.dart';
+import '../widgets/email_password_auth.dart';
+import '../widgets/google_auth.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -26,29 +27,60 @@ class LoginPage extends StatelessWidget {
             Expanded(
               child: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
-                  // return Container();
+                  if (state is AuthInitial) {
+                    BlocProvider.of<AuthBloc>(context)
+                        .add(AuthCurrentUserEvent());
+                    return Center(child: CircularProgressIndicator());
+                  }
                   if (state is Empty) {
-                    return GoogleAuth();
-                    // return MessageDisplay(
-                    //   message: 'Iniciando busca!',
-                    // );
+                    return LoginWidget();
                   } else if (state is Loading) {
                     return Center(
-                      child: Text('loading'),
+                      child: CircularProgressIndicator(),
                     );
-                    // return LoadingWidget();
                   } else if (state is Loaded) {
-                    return NewsPage();
-                    // return NewsDisplay(news: state.news);
+                    return NewsPage(
+                      userModel: state.user,
+                    );
                   } else if (state is Error) {
-                    // return MessageDisplay(
-                    //   message: state.message,
-                    // );
+                    return LoginWidget();
                   }
                 },
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class LoginWidget extends StatelessWidget {
+  const LoginWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 50),
+      color: Theme.of(context).primaryColor,
+      child: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Image.asset(
+                'images/boti-amphora.png',
+                height: MediaQuery.of(context).size.height * 0.2,
+              ),
+              EmailPasswordAuth(),
+              GoogleAuth(),
+            ],
+          ),
         ),
       ),
     );

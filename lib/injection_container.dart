@@ -6,29 +6,64 @@ import 'package:http/http.dart' as http;
 
 import 'core/network/network_info.dart';
 import 'features/auth/data/datasource/auth_data_source.dart';
+import 'features/auth/data/datasource/user_data_source.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
+import 'features/auth/data/repositories/user_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repositories.dart';
+import 'features/auth/domain/repositories/user_repositories.dart';
+import 'features/auth/domain/usecases/auth_current_user.dart';
 import 'features/auth/domain/usecases/auth_email_password.dart';
 import 'features/auth/domain/usecases/auth_google.dart';
-import 'features/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'features/auth/domain/usecases/auth_log_out.dart';
+import 'features/auth/domain/usecases/auth_register_email_password.dart';
+import 'features/auth/domain/usecases/user_get_user.dart';
+import 'features/auth/domain/usecases/user_set_user.dart';
+import 'features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'features/auth/presentation/bloc/user/user_bloc.dart';
+import 'features/microblogging/data/datasources/comentario_data_source.dart';
 import 'features/microblogging/data/datasources/news_remote_data_source.dart';
+import 'features/microblogging/data/repositories/comentario_repository_impl.dart';
 import 'features/microblogging/data/repositories/news_repository_impl.dart';
+import 'features/microblogging/domain/repositories/comentario_repository.dart';
 import 'features/microblogging/domain/repositories/news_repository.dart';
+import 'features/microblogging/domain/usecases/del_comentario.dart';
+import 'features/microblogging/domain/usecases/get_comentario.dart';
 import 'features/microblogging/domain/usecases/get_news.dart';
-import 'features/microblogging/presentation/bloc/bloc/news_bloc.dart';
+import 'features/microblogging/domain/usecases/set_comentario.dart';
+import 'features/microblogging/presentation/bloc/comentario/comentario_bloc.dart';
+import 'features/microblogging/presentation/bloc/news/news_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - Microblogging
+  //! Features
   //Bloc
   sl.registerFactory(() => NewsBloc(news: sl()));
-  sl.registerFactory(() => AuthBloc(authEmailPassword: sl(), authGoogle: sl()));
+  sl.registerFactory(
+    () => AuthBloc(
+      authRegisterEmailPassword: sl(),
+      authEmailPassword: sl(),
+      authGoogle: sl(),
+      currentUser: sl(),
+      logOut: sl(),
+    ),
+  );
+  sl.registerFactory(() => UserBloc(userGetUser: sl(), userSetUser: sl()));
+  sl.registerLazySingleton(() => ComentarioBloc(
+      comentariosGet: sl(), comentarioSet: sl(), comentarioDel: sl()));
 
   // Use cases
   sl.registerLazySingleton(() => GetNews(sl()));
   sl.registerLazySingleton(() => AuthEmailPassword(sl()));
+  sl.registerLazySingleton(() => AuthRegisterEmailPassword(sl()));
   sl.registerLazySingleton(() => AuthGoogle(sl()));
+  sl.registerLazySingleton(() => AuthCurrentUser(sl()));
+  sl.registerLazySingleton(() => AuthLogOut(sl()));
+  sl.registerLazySingleton(() => UserGetUser(sl()));
+  sl.registerLazySingleton(() => UserSetUser(sl()));
+  sl.registerLazySingleton(() => GetComentarios(sl()));
+  sl.registerLazySingleton(() => SetComentario(sl()));
+  sl.registerLazySingleton(() => DelComentario(sl()));
 
   // Repository
   sl.registerLazySingleton<NewsRepository>(
@@ -38,11 +73,22 @@ Future<void> init() async {
     ),
   );
 
-  sl.registerLazySingleton<AuthRepository>(
+  sl.registerFactory<AuthRepository>(
     () => AuthRepositoryImpl(
       authDataSource: sl(),
       networkInfo: sl(),
     ),
+  );
+
+  sl.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(
+      userDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<ComentarioRepository>(
+    () => ComentarioRepositoryImpl(comentarioDataSource: sl()),
   );
 
   // Data sources
@@ -56,6 +102,10 @@ Future<void> init() async {
       // user: sl(),
     ),
   );
+
+  sl.registerLazySingleton<UserDataSource>(() => UserDataSourceImpl());
+  sl.registerLazySingleton<ComentarioDataSource>(
+      () => ComentarioDataSourceImpl());
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));

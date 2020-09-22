@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../injection_container.dart';
-import '../bloc/bloc/news_bloc.dart';
+import '../../../auth/data/models/user_model.dart';
+import '../bloc/news/news_bloc.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/message_display.dart';
 import '../widgets/news_display.dart';
+import 'comentarios_page.dart';
+import 'perfil_page.dart';
 
 class NewsPage extends StatefulWidget {
+  final UserModel userModel;
+
+  const NewsPage({Key key, @required this.userModel}) : super(key: key);
   @override
   _NewsPageState createState() => _NewsPageState();
 }
@@ -56,8 +62,12 @@ class _NewsPageState extends State<NewsPage> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            Container(),
-            Container(),
+            PerfilPage(
+              userModel: widget.userModel,
+            ),
+            ComentariosPage(
+              userModel: widget.userModel,
+            ),
             buildBodyNews(context),
           ],
         ),
@@ -66,7 +76,7 @@ class _NewsPageState extends State<NewsPage> {
         index: _currentIndex,
         color: Theme.of(context).primaryColor,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        buttonBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        buttonBackgroundColor: Colors.transparent,
         height: 50,
         animationDuration: Duration(milliseconds: 300),
         items: <Widget>[
@@ -123,7 +133,8 @@ class _NewsPageState extends State<NewsPage> {
                     return MessageDisplay(
                       message: state.message,
                     );
-                  }
+                  } else
+                    return Container();
                 },
               ),
             ),
