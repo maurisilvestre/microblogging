@@ -28,4 +28,11 @@ class UserModel extends User {
   Map<String, dynamic> toJson() {
     return {'name': displayName, 'profile_picture': photoURL, 'email': email};
   }
+
+  Map<String, dynamic> toJsonNews() {
+    return {
+      'name': displayName,
+      'profile_picture': photoURL,
+    };
+  }
 }

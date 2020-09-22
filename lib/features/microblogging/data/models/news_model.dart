@@ -20,6 +20,6 @@ class NewsModel extends News {
   }
 
   Map<String, dynamic> toJson() {
-    return {'user': user.toJson(), 'message': message.toJson()};
+    return {'user': user.toJsonNews(), 'message': message.toJson()};
   }
 }
