@@ -43,13 +43,13 @@ class _NewsPageState extends State<NewsPage> {
         _currentPageTitle = 'Perfil';
         break;
       case 1:
-        _currentPageTitle = 'Chat';
+        _currentPageTitle = 'Microblogging';
         break;
       case 2:
         _currentPageTitle = 'Novidades';
         break;
       default:
-        _currentPageTitle = 'Chat';
+        _currentPageTitle = 'Microblogging';
     }
     return Scaffold(
       appBar: AppBar(
